@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Votre Formulaire</title>
+  </head>
+  <body>
+    <h1>Formulaire Utilisateur</h1>
+    <!-- votre_template.html -->
+
+    <form method="post">
+      {% csrf_token %}
+      <label for="id_name">Nom:</label>
+      <input
+        type="text"
+        id="id_name"
+        name="name"
+        placeholder="Votre nom"
+      /><br />
+
+      <label for="id_email">Email:</label>
+      <input
+        type="email"
+        id="id_email"
+        name="email"
+        placeholder="Votre email"
+      /><br />
+
+      <label for="id_level">Niveau:</label>
+      <select id="id_level" name="level">
+        {% for choice in level_choices %}
+        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+        {% endfor %}</select
+      ><br />
+
+      <button type="submit">Enregistrer</button>
+    </form>
+  </body>
+</html>

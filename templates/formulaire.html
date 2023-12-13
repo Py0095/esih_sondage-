@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ESIH Sondage</title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 20px;
+      }
+
+      .container {
+          background-color: #fff;
+          padding: 30px;
+          border-radius: 5px;
+          box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+          text-align: center;
+          margin-bottom: 20px;
+      }
+
+      h2 {
+          margin-top: 20px;
+      }
+
+      label {
+          margin-bottom: 5px;
+      }
+
+      .form-group {
+          margin-bottom: 20px;
+      }
+  </style>
+</head>
+<body>
+    
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+  <h2>Intentions de quitter le pays :</h2>
+  <p>Avez-vous l'intention de quitter le pays après avoir terminé vos études universitaires?</p>
+  {% for choice in QUITTER_PAYS_CHOICES %}
+      <label>
+          <input type="radio" name="quitter_pays" value="{{ choice.0 }}"
+                 {% if user_info.quitter_pays == choice.0 %}checked{% endif %}>
+          {{ choice.1 }}
+      </label><br>
+  {% endfor %}
+    </div>
+
+  {% comment %} <select name="niveau_etudes">
+    {% for choice in QUITTER_PAYS_CHOICES %}
+        <option value="{{ choice.0 }}" {% if user_info.quitter_pays == choice.0 %}selected{% endif %}>
+            {{ choice.1 }}
+        </option>
+    {% endfor %}
+</select><br> {% endcomment %}
+  
+
+<div class="form-group">
+  <h2>Tranche d'âge :</h2>
+  <p>Quel est votre âge actuel?</p>
+  <select name="age">
+      {% for choice in AGE_CHOICES %}
+          <option value="{{ choice.0 }}" {% if user_info.age == choice.0 %}selected{% endif %}>
+              {{ choice.1 }}
+          </option>
+      {% endfor %}
+  </select><br>
+</div>
+  
+  <div class="form-group">
+  <h2>Niveau d'études :</h2>
+  <p>À quel niveau d'études êtes-vous actuellement?</p>
+  <select name="niveau_etudes">
+      {% for choice in LEVEL_CHOICES %}
+          <option value="{{ choice.0 }}" {% if user_info.niveau_etudes == choice.0 %}selected{% endif %}>
+              {{ choice.1 }}
+          </option>
+      {% endfor %}
+  </select><br>
+</div>
+  
+<div class="form-group">
+    <h2>Pays visé :</h2>
+    <p>Vers quel(s) pays envisagez-vous de vous rendre? (Sélectionnez tous ceux qui s'appliquent)</p>
+    <label><input type="checkbox" name="pays_vise[]" value="etats_unis"> États-Unis</label><br>
+    <label><input type="checkbox" name="pays_vise[]" value="canada"> Canada</label><br>
+    <label><input type="checkbox" name="pays_vise[]" value="royaume_uni"> Royaume-Uni</label><br>
+    <label><input type="checkbox" name="pays_vise[]" value="australie"> Australie</label><br>
+    <label><input type="checkbox" name="pays_vise[]" value="france"> France</label><br>
+    <label><input type="checkbox" name="pays_vise[]" value="autre"> Autre (précisez): <input type="text" name="autre_pays"></label><br>
+</div>
+<div class="form-group">
+    <h2>Raison du départ :</h2>
+    <p>Pourquoi envisagez-vous de quitter le pays? (Sélectionnez toutes celles qui s'appliquent)</p>
+    <label><input type="checkbox" name="raison_depart[]" value="opportunites_professionnelles"> Opportunités professionnelles</label><br>
+    <label><input type="checkbox" name="raison_depart[]" value="recherche_academique"> Recherche académique</label><br>
+    <label><input type="checkbox" name="raison_depart[]" value="qualite_vie"> Qualité de vie</label><br>
+    <label><input type="checkbox" name="raison_depart[]" value="autre_raison"> Autre (précisez): <input type="text" name="autre_raison"></label><br>
+
+    <h2>Objectif du départ :</h2>
+    <p>Envisagez-vous de quitter le pays pour des études supplémentaires ou d'autres raisons? (Sélectionnez tous ceux qui s'appliquent)</p>
+    <select name="objectif_depart">
+      {% for choice in OBJECTIF_CHOICES %}
+          <option value="{{ choice.0 }}" {% if user_info.objectif_depart == choice.0 %}selected{% endif %}>
+              {{ choice.1 }}
+          </option>
+      {% endfor %}
+  </select><br>
+</div>
+
+<div class="form-group">
+    <h2>Durée prévue à l'étranger :</h2>
+    <p>Si vous envisagez un départ temporaire, quelle est la durée prévue de votre séjour?</p>
+
+    <select name="duree_sejour">
+      {% for choice in DUREE_SEJOUR_CHOICES %}
+          <option value="{{ choice.0 }}" {% if user_info.duree_sejour == choice.0 %}selected{% endif %}>
+              {{ choice.1 }}
+          </option>
+      {% endfor %}
+  </select><br>
+</div>
+
+  
+  <div class="form-group">
+    <h2>Intention de retour dans le pays d'origine :</h2>
+    <p>Avez-vous l'intention de retourner dans votre pays d'origine après votre séjour à l'étranger?</p>
+  {% for choice in QUITTER_PAYS_CHOICES %}
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="retour_pays_origine" id="{{ choice.0 }}"
+               value="{{ choice.0 }}" {% if user_info.retour_pays_origine == choice.0 %}checked{% endif %}>
+        <label class="form-check-label" for="{{ choice.0 }}">{{ choice.1 }}</label>
+    </div>
+{% endfor %}
+</div>
+
+<input type="submit" value="Soumettre" class="btn btn-primary">
+
+</form>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
