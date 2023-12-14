@@ -1,0 +1,17 @@
+[
+    {
+        "quitter_pays": null,
+        "age": "20_24",
+        "niveau_etudes": "L4",
+        "pays_vise": [
+            "etats_unis",
+            "canada"
+        ],
+        "duree_sejour": "plus_5_ans",
+        "raison_depart": [
+            "opportunites_professionnelles"
+        ],
+        "objectif_depart": "raisons_personnelles",
+        "retour_pays_origine": "incertain"
+    }
+]
